@@ -5,6 +5,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.rcParams['font.sans-serif'] = ['SimSun','Times']
+
 def generate_data():
     """生成示例数据"""
     np.random.seed(42)
@@ -98,7 +100,7 @@ def plot_results(data, mu, gamma):
     labels = np.argmax(gamma, axis=1)
     plt.scatter(data[:, 0], data[:, 1], c=labels, cmap='viridis', s=10)
     plt.scatter(mu[:, 0], mu[:, 1], c='red', marker='x', s=100, label='Centroids')
-    plt.title('GMM Clustering Result')
+    plt.title('GMM 聚类结果')
     plt.legend()
     plt.show()
 

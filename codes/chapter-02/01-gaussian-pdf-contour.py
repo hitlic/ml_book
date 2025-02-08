@@ -1,3 +1,7 @@
+"""
+高斯分布的概率密度函数
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import multivariate_normal

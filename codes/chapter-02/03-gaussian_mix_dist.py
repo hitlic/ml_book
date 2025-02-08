@@ -1,10 +1,14 @@
+"""
+高斯混合分布
+"""
+
 import numpy as np
 from scipy.stats import multivariate_normal
 from matplotlib import pyplot as plt
 
 # plt.rcParams['text.usetex'] = True  # 启用LaTeX渲染
 # plt.rcParams['font.family'] = 'serif'
-# plt.rcParams['font.serif'] = ['Times']
+# plt.rcParams['font.sans-serif'] = ['SimSun','Times']
 # plt.rcParams['font.size'] = 16
 
 
