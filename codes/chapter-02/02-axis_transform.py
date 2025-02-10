@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 from scipy.stats import multivariate_normal
 
 plt.rcParams['text.usetex'] = True  # 启用LaTeX渲染
-# plt.rcParams['font.family'] = 'serif'
-# plt.rcParams['font.sans-serif'] = ['SimSun','Times']
 plt.rcParams['font.size'] = 16
 
 

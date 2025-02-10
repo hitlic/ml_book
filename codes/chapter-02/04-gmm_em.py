@@ -4,8 +4,14 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import multivariate_normal
 
-plt.rcParams['font.sans-serif'] = ['SimSun','Times']
+# plt.rcParams['text.usetex'] = True  # 启用LaTeX渲染
+plt.rcParams['font.family'] = 'SimSun'
+plt.rcParams['font.sans-serif'] = ['SimSun', 'Times New Roman']
+plt.rcParams['axes.unicode_minus'] = False
+plt.rcParams['font.size'] = 14
+
 
 def generate_data():
     """生成示例数据"""
@@ -55,7 +61,7 @@ def e_step(data, pi, mu, sigma, K):
 
 def m_step(data, gamma, K):
     """M步：更新模型参数"""
-    N, D = data.shape
+    N = data.shape[0]
     N_k = np.sum(gamma, axis=0)
 
     # 更新混合系数
@@ -95,16 +101,37 @@ def gmm_em(data, K=3, max_iter=100, tol=1e-4):
 
     return pi, mu, sigma, gamma
 
+
+def plot_gaussian_contours(mus, sigmas, pis):
+    """绘制高斯混合分布概率密度"""
+    ax = plt.gca()
+    x = np.linspace(0, 8, 100)
+    y = np.linspace(0, 6, 100)
+    X, Y = np.meshgrid(x, y)
+    pos = np.dstack((X, Y))
+
+    # 计算混合高斯分布的概率密度
+    Z = np.zeros(X.shape)
+    for pi, mu, sigma in zip(pis, mus, sigmas):
+        rv = multivariate_normal(mean=mu, cov=sigma)
+        Z += pi * rv.pdf(pos)
+    ax.contourf(X, Y, Z, cmap='Blues', alpha=1.0, levels=20)
+
+
 # 绘制结果
 def plot_results(data, mu, gamma):
     labels = np.argmax(gamma, axis=1)
     plt.scatter(data[:, 0], data[:, 1], c=labels, cmap='viridis', s=10)
-    plt.scatter(mu[:, 0], mu[:, 1], c='red', marker='x', s=100, label='Centroids')
-    plt.title('GMM 聚类结果')
+    plt.scatter(mu[:, 0], mu[:, 1], c='red', marker='^', s=100, label='聚类中心')
+
+    plt.xticks(fontname='Times New Roman')
+    plt.yticks(fontname='Times New Roman')
     plt.legend()
+
+    # plt.subplots_adjust(left=0.06, right=0.97, top=0.98, bottom=0.06, wspace=0.2, hspace=0.2)
     plt.show()
 
-# 主程序
+
 if __name__ == "__main__":
     data = generate_data()
     K = 3  # 高斯分量数量
@@ -118,4 +145,5 @@ if __name__ == "__main__":
     print("协方差矩阵:", sigma)
 
     # 绘制聚类结果
+    plot_gaussian_contours(mu, sigma, pi)
     plot_results(data, mu, gamma)
