@@ -1,6 +1,14 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
+# 设置图片字体
+# plt.rcParams['mathtext.fontset'] = 'custom'
+# plt.rcParams['mathtext.rm'] = 'Times New Roman'
+# plt.rcParams['mathtext.it'] = 'Times New Roman:italic'
+# plt.rcParams['mathtext.bf'] = 'Times New Roman:bold'
+# plt.rcParams['font.family'] = 'Times New Roman'
+# plt.rcParams['font.size'] = 13
+
 
 def linear_data_gen(w=3.0, b=2.0, num=1000):
     """随机生成线性回归数据集 y = w * x + b"""
@@ -67,10 +75,11 @@ fig1.set_title("训练前", fontdict=font)
 
 # 中图
 fig2 = plt.subplot(132)
-fig2.plot(epochs, ws, 'y')
-fig2.plot(epochs, bs, 'm')
-fig2.plot([target_w] * len(epochs), 'y--', [target_b] * len(epochs), 'm--')
-fig2.legend(['w', 'b', 'target w', 'target b'])
+fig2.plot(epochs, ws, 'peru')
+fig2.plot(epochs, bs, '')
+fig2.plot([target_w] * len(epochs), '--', color='peru')
+fig2.plot([target_b] * len(epochs), '--', color='teal')
+fig2.legend([r'$w$', r'$b$', r'target $w$', r'target $b$'])
 fig2.set_title("训练中", fontdict=font)
 
 # 右图
@@ -78,5 +87,7 @@ fig3 = plt.subplot(133)
 fig3.scatter(x[:,[0]], y, c='b', marker='o', s=4)
 fig3.scatter(x[:,[0]], model(x), c='g', marker='o', s=4)
 fig3.set_title("训练后", fontdict=font)
+
+# plt.subplots_adjust(left=0.04, right=0.99, top=0.9, bottom=0.08, wspace=0.2, hspace=0.1)
 
 plt.show()
