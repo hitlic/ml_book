@@ -3,11 +3,11 @@ from sklearn.datasets import make_blobs
 
 np.random.seed(12)
 
-# 生成二维高斯分布的二分类数据集
+# 生成数据集
 data, label = make_blobs(
-    n_samples=100,          # 样本数量
-    n_features=2,           # 特征数量（二维）
-    centers=2,              # 类别数量（二分类）
+    n_samples=100,
+    n_features=2,
+    centers=2,              # 类别数量
     cluster_std=1.0,        # 每个类别的高斯分布标准差
     center_box=(-5.0, 5.0),  # 每个类别中心的边界范围
     random_state=42         # 随机种子
@@ -21,9 +21,6 @@ label[label == 0] = -1
 mean = data.mean(axis=0)
 std = data.std(axis=0)
 data = (data - mean)/std
-
-# 将0标签置为-1
-label[label==0] = -1
 
 
 class Model:
@@ -39,6 +36,7 @@ class Model:
         if self(x) * y < 0:
             self.w += self.lr * y * x
             self.b += self.lr * y
+
 
 # 学习
 model = Model(2, 0.1)
