@@ -8,6 +8,11 @@ sklearn实现：
 import numpy as np
 import matplotlib.pyplot as plt
 
+# 设置图片字体
+# plt.rcParams['font.family'] = 'Times New Roman'
+# plt.rcParams['font.size'] = 16
+
+
 
 def confusion_matrix(y_true, y_scores, threshold):
     """
@@ -72,11 +77,15 @@ if __name__ == '__main__':
         precision_list.append(precision(TP, FP))
         recall_list.append(recall(TP, FN))
 
-    print('PR_AUC:', pr_auc(recall_list, precision_list))
+    pr_auc_value = pr_auc(recall_list, precision_list)
+    print('PR_AUC:', pr_auc_value)
 
-    plt.figure(figsize=(6, 6))
+    plt.figure()
     plt.plot(recall_list, precision_list, marker='o', linestyle='-', label="PR Curve")
-    plt.xlabel('Recall')
-    plt.ylabel('Precision')
+    plt.xlabel('查全率', fontname='SimSun')
+    plt.ylabel('查准率', fontname='SimSun')
     plt.grid()
+    # plt.subplots_adjust(left=0.12, right=0.98, top=0.9, bottom=0.13, wspace=0.2, hspace=0.1)
+    plt.title(f'PR曲线下面积 {pr_auc_value:.4}', fontname='SimSun')
+
     plt.show()
